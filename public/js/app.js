@@ -2099,7 +2099,7 @@ __webpack_require__.r(__webpack_exports__);
           User.responseAfterLogin(res);
 
           _this.$router.push({
-            path: '/home'
+            path: '/'
           });
         })["catch"](function (error) {
           var status = error.response.status;
@@ -2257,6 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -39019,7 +39020,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Gago")])])
+    return _c("div", [
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("h1", [_vm._v("Gago")])
+    ])
   }
 ]
 render._withStripped = true
@@ -99635,8 +99643,11 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
-  path: '/home',
-  component: _components_pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  path: '/',
+  component: _components_pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/login',
   component: _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -99647,10 +99658,24 @@ var routes = [{
   path: '/logout',
   component: _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }];
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   routes: routes
-}));
+});
+router.beforeEach(function (to, from, next) {
+  if (to.meta.requiresAuth) {
+    if (User.loggedIn()) {
+      next();
+    } else {
+      next({
+        path: '/login'
+      });
+    }
+  }
+
+  next();
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 

@@ -9,8 +9,11 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: '/home',
-        component: Home
+        path: '/',
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/login',
@@ -26,7 +29,21 @@ const routes = [
     }
 ];
 
-export default new VueRouter({
+
+const router = new VueRouter({
     mode: 'history',
     routes
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+        if (User.loggedIn()) {
+            next()
+        } else {
+            next({ path: '/login' })
+        }
+    }
+    next()
+})
+
+export default router
