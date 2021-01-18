@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -18,7 +20,7 @@ class AuthController extends Controller
         $this->middleware('auth:sanctum', ['except' => ['login', 'register']]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
@@ -45,16 +47,12 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         try {
             User::create($request->all());
         }
         catch(Exception $e) {
-            if ($e->getCode() == 23000) {
-                return response()->json(['error' => 'Email is already exist.'], 500);
-            }
-
             return response()->json(['error' => 'Something went wrong.'], 500);
         }
 

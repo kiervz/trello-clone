@@ -1,12 +1,14 @@
 <template>
-    <div class="main-app">
-        <h1>Main App</h1>
+    <v-app>
+        <app-header></app-header>
         <router-view></router-view>
-    </div>
+    </v-app>
 </template>
 
 <script>
+    import AppHeader from './AppHeader'
     export default {
+        components: { AppHeader },
 
     }
 </script>

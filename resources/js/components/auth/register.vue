@@ -1,36 +1,44 @@
 <template>
-    <div class="container">
-        <br><br>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card mx-auto">
-                    <div class="card-body">
-                        <span class="text-danger" v-if="error">
-                            <div class="alert alert-danger" role="alert">{{ error }}</div>
-                        </span>
-                        <div class="form-group" v-for="(item, index) in items" :key="index">
-                            <label>{{ item.label }}</label>
-                            <input
-                                v-model="form[item.name]"
-                                :type="item.type"
-                                class="form-control"
-                                :placeholder="item.label">
-                            <span class="text-danger" v-if="errors[item.name]">{{ errors[item.name][0] }}</span>
-                        </div>
-
-                        <button
-                            class="btn btn-sm btn-primary form-control"
-                            @click="register">
-                            Register
-                        </button>
-                        <div class="mt-5 text-center">
-                            Already have an Account? <router-link to="/login" class="text-decoration-none">Login</router-link>
-                        </div>
+    <v-container>
+        <v-card class="mx-auto mt-16" width="500">
+            <v-card-text>
+                <h1>Register</h1>
+                <v-alert
+                    dense
+                    outlined
+                    type="error"
+                    v-if="error"
+                    >
+                    {{ error }}
+                </v-alert>
+                <v-form
+                    ref="form"
+                    lazy-validation
+                >
+                    <div v-for="(item, $index) in items" :key="$index">
+                        <v-text-field
+                            :type="item.type"
+                            v-model="form[item.name]"
+                            :label="item.label"
+                            :name="form[item.name]"
+                        ></v-text-field>
+                        <span class="red--text" v-if="errors[item.name]">{{ errors[item.name][0] }}</span>
                     </div>
+                </v-form>
+
+                <v-btn
+                    class="mr-4"
+                    color="primary"
+                    @click="register"
+                    block>
+                    Signup
+                </v-btn>
+                <div class="mt-5 text-center">
+                    Already have an Account? <router-link to="/login" class="text-decoration-none">Login</router-link>
                 </div>
-            </div>
-        </div>
-    </div>
+            </v-card-text>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
