@@ -60,7 +60,7 @@
         data() {
             return {
                 items: [
-                    { title: 'Home', to: '/home', show: User.loggedIn() },
+                    { title: 'Home', to: '/', show: User.loggedIn() },
                     { title: 'Task', to: '/task', show: User.loggedIn() },
                     { title: 'Login', to: '/login', show: !User.loggedIn() },
                     { title: 'Register', to: '/register', show: !User.loggedIn() },
