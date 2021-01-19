@@ -1,7 +1,10 @@
 <template>
     <v-app>
         <app-header></app-header>
-        <router-view></router-view>
+        <br><br>
+        <v-container>
+            <router-view></router-view>
+        </v-container>
     </v-app>
 </template>
 
@@ -9,6 +12,15 @@
     import AppHeader from './AppHeader'
     export default {
         components: { AppHeader },
+        data() {
+            return {
 
+            }
+        },
+        created() {
+            EventBus.$on('logout', () => {
+                User.logOut();
+            })
+        }
     }
 </script>

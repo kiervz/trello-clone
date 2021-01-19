@@ -18,7 +18,8 @@ class CardResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'task_id' => $this->task_id,
-            'created_at' => $this->created_at
+            'is_complete' => $this->is_complete,
+            'created_at' => $this->created_at->format('M j, Y - G:i')
         ];
     }
 }

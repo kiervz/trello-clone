@@ -17,6 +17,7 @@ class CreateCardsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('task_id');
+            $table->boolean('is_complete')->default(0);
             $table->timestamps();
         });
     }

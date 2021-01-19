@@ -21,4 +21,9 @@ class Task extends Model
         return $this->hasMany(Card::class);
     }
 
+    public function cardsCompleted()
+    {
+        return $this->cards()->where('is_complete', '=', 1);
+    }
+
 }

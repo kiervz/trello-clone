@@ -11,11 +11,6 @@
             return {
 
             }
-        },
-        created() {
-            EventBus.$on('logout', () => {
-                User.logOut();
-            })
         }
     }
 </script>
