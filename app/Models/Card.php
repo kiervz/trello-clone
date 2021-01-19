@@ -5,20 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Card extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function user()
+    public function task()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Task::class);
     }
-
-    public function cards()
-    {
-        return $this->hasMany(Card::class);
-    }
-
 }

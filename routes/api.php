@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\TaskController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('task', TaskController::class);
+// Route::apiResource('card', CardController::class);
+
+
+Route::get('card/{task_id}', [CardController::class, 'index'])->name('card.index');
+Route::get('card/{card_id}/{task_id}', [CardController::class, 'show'])->name('card.show');
+Route::post('card/{task_id}', [CardController::class, 'store'])->name('card.store');
+Route::put('card/{card_id}/{task_id}', [CardController::class, 'update'])->name('card.update');
+Route::delete('card/{card_id}/{task_id}', [CardController::class, 'destroy'])->name('card.destroy');
+
 
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthController::class, 'login'])->name('login');
