@@ -31,7 +31,10 @@ const routes = [
     {
         name: 'Task',
         path: '/task',
-        component: Task
+        component: Task,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         name: 'Logout',

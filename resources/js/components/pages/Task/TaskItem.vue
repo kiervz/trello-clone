@@ -8,7 +8,8 @@
                 md="4"
                 sm="6">
                 <v-card
-                    class="pt-4 pl-4 pr-4 ma-2"
+                    @click="clickItem(todo.id)"
+                    class="pt-4 pl-4 pr-4 ma-2 card-item"
                     >
                     <v-card-text>
                         <h2 class="text--secondary">{{ todo.name }}</h2>
@@ -16,13 +17,15 @@
                     <v-card-actions class="d-flex flex-row-reverse">
                         <h5 class="grey--text">{{ todo.created_at}}</h5>
                          <div class="badge">
-                            <v-badge :content="todo.count_cards > 0 ? todo.count_cards : '0'"
-                                    color="grey"
-                                    inline
-                                    class="mr-5">
+                            <v-badge
+                                :content="todo.count_cards > 0 ? todo.count_cards : '0'"
+                                color="grey"
+                                inline
+                                class="mr-5">
                                 <v-icon>mdi-format-list-bulleted-square</v-icon>
                             </v-badge>
-                             <v-badge :content="todo.count_complete > 0 ? todo.count_complete : '0'"
+                             <v-badge
+                                :content="todo.count_complete > 0 ? todo.count_complete : '0'"
                                 color="blue"
                                 inline
                                 class="mr-5">
@@ -40,7 +43,7 @@
     export default {
         data() {
             return {
-                todos: []
+                todos: [],
             }
         },
         created() {
@@ -55,6 +58,9 @@
                     .catch(error => {
                         console.log(error);
                     })
+            },
+            clickItem(task_id) {
+                EventBus.$emit('showCard', task_id);
             }
         }
     }
@@ -63,5 +69,9 @@
 <style scoped>
     .badge {
         margin-right: 20%;
+    }
+    .card-item:hover {
+        background-color: #F5F5F5;
+        cursor: pointer;
     }
 </style>

@@ -75,5 +75,17 @@ class CardController extends Controller
         ]);
     }
 
+    public function updateIsComplete(Request $request, $id, $task_id)
+    {
+        $card = Card::where('id', $id)
+                    ->where('task_id', $task_id)
+                    ->first();
+
+        $card->update($request->all());
+
+        return response()->json([
+            'message' => 'Card Successfully Updated.'
+        ]);
+    }
 
 }

@@ -24,6 +24,7 @@ Route::get('card/{task_id}', [CardController::class, 'index'])->name('card.index
 Route::get('card/{card_id}/{task_id}', [CardController::class, 'show'])->name('card.show');
 Route::post('card/{task_id}', [CardController::class, 'store'])->name('card.store');
 Route::put('card/{card_id}/{task_id}', [CardController::class, 'update'])->name('card.update');
+Route::put('card/{card_id}/{task_id}/update', [CardController::class, 'updateIsComplete'])->name('is_complete.update');
 Route::delete('card/{card_id}/{task_id}', [CardController::class, 'destroy'])->name('card.destroy');
 
 
