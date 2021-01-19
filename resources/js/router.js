@@ -10,6 +10,7 @@ Vue.use(VueRouter);
 
 const routes = [
     {
+        name: 'Home',
         path: '/',
         component: Home,
         meta: {
@@ -17,18 +18,22 @@ const routes = [
         }
     },
     {
+        name: 'Login',
         path: '/login',
         component: Login
     },
     {
+        name: 'Register',
         path: '/register',
         component: Register
     },
     {
+        name: 'Logout',
         path: '/logout',
         component: Logout
     },
     {
+        name: 'NotFound',
         path: '*',
         component: NotFound404
     }

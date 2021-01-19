@@ -50,4 +50,10 @@ class User extends Authenticatable
 
         $this->attributes['password'] = $password;
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
 }

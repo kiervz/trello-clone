@@ -6,6 +6,7 @@ class User {
         const access_token = res.data.access_token;
         const user = res.data.user;
         AppStorage.store(access_token, user);
+        window.location = '/';
     }
 
     hasToken() {

@@ -66,7 +66,6 @@
                     axios.post('api/auth/login', this.form)
                         .then(res => {
                             User.responseAfterLogin(res)
-                            this.$router.push({path: '/'})
                         })
                         .catch(error => {
                             let status = error.response.status

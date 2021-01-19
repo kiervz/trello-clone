@@ -101423,6 +101423,7 @@ var User = /*#__PURE__*/function () {
       var access_token = res.data.access_token;
       var user = res.data.user;
       _AppStorage__WEBPACK_IMPORTED_MODULE_0__["default"].store(access_token, user);
+      window.location = '/';
     }
   }, {
     key: "hasToken",
@@ -101488,21 +101489,26 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
+  name: 'Home',
   path: '/',
   component: _components_pages_Home_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
+  name: 'Login',
   path: '/login',
   component: _components_auth_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
+  name: 'Register',
   path: '/register',
   component: _components_auth_Register_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
+  name: 'Logout',
   path: '/logout',
   component: _components_auth_Logout_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
+  name: 'NotFound',
   path: '*',
   component: _components_pages_NotFound404_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }];
