@@ -27,8 +27,47 @@
                         </template>
                         <v-list>
                             <v-list-item link>
-                                <v-list-item-title><v-icon>mdi-pencil</v-icon> Edit</v-list-item-title>
+                                <!-- Show the Edit Task Name Dialog -->
+                                <v-dialog
+                                    v-model="dialog"
+                                    width="500">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-list-item-title
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                @click="setTaskName(task.task_name)"
+                                            >
+                                            <v-icon>mdi-pencil</v-icon> Edit
+                                        </v-list-item-title>
+                                    </template>
+
+                                    <v-card>
+                                        <v-card-title class="headline">
+                                            Edit Task Name
+                                        </v-card-title>
+
+                                        <v-card-text>
+                                            <v-text-field
+                                                label="Task Name*"
+                                                required
+                                                v-model="task_name"
+                                                >
+                                            </v-text-field>
+                                        </v-card-text>
+
+                                        <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            color="primary"
+                                            text
+                                            @click="updateTask(task.id, task_name)">
+                                            UPDATE
+                                        </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                             </v-list-item>
+
                             <v-list-item link>
                                 <v-list-item-title @click="deleteTask(task.id)"><v-icon>mdi-delete</v-icon> Delete</v-list-item-title>
                             </v-list-item>
@@ -60,9 +99,8 @@
                         </v-card-actions>
                     </div>
                 </v-card>
-
-
             </v-col>
+
         </v-row>
     </div>
 </template>
@@ -72,6 +110,8 @@
         data() {
             return {
                 tasks: [],
+                dialog: false,
+                task_name: null,
             }
         },
         created() {
@@ -91,6 +131,19 @@
             },
             clickItem(task_id, name) {
                 EventBus.$emit('showCard', task_id, name);
+            },
+            setTaskName(name) {
+                this.task_name = name
+            },
+            updateTask(id, name) {
+                axios.put(`api/task/${id}`, {
+                        task_name: name
+                    })
+                    .then(data => {
+                        this.dialog = false
+                        this.fetchTasks()
+                    })
+                    .catch(error => console.log(error))
             },
             deleteTask(id) {
                 axios.delete(`api/task/${id}`)

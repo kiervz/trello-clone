@@ -11,6 +11,16 @@ class Task extends Model
 
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Deleting all cards connected to the task
+        self::deleting(function ($task) {
+           $task->cards->each->delete();
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

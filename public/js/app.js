@@ -2669,10 +2669,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      tasks: []
+      tasks: [],
+      dialog: false,
+      task_name: null
     };
   },
   created: function created() {
@@ -2697,11 +2737,27 @@ __webpack_require__.r(__webpack_exports__);
     clickItem: function clickItem(task_id, name) {
       EventBus.$emit('showCard', task_id, name);
     },
-    deleteTask: function deleteTask(id) {
+    setTaskName: function setTaskName(name) {
+      this.task_name = name;
+    },
+    updateTask: function updateTask(id, name) {
       var _this3 = this;
 
-      axios["delete"]("api/task/".concat(id)).then(function (data) {
+      axios.put("api/task/".concat(id), {
+        task_name: name
+      }).then(function (data) {
+        _this3.dialog = false;
+
         _this3.fetchTasks();
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    deleteTask: function deleteTask(id) {
+      var _this4 = this;
+
+      axios["delete"]("api/task/".concat(id)).then(function (data) {
+        _this4.fetchTasks();
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -41737,10 +41793,129 @@ var render = function() {
                             { attrs: { link: "" } },
                             [
                               _c(
-                                "v-list-item-title",
+                                "v-dialog",
+                                {
+                                  attrs: { width: "500" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "v-list-item-title",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.setTaskName(
+                                                          task.task_name
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "v-list-item-title",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-icon", [
+                                                  _vm._v("mdi-pencil")
+                                                ]),
+                                                _vm._v(
+                                                  " Edit\n                                    "
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  ),
+                                  model: {
+                                    value: _vm.dialog,
+                                    callback: function($$v) {
+                                      _vm.dialog = $$v
+                                    },
+                                    expression: "dialog"
+                                  }
+                                },
                                 [
-                                  _c("v-icon", [_vm._v("mdi-pencil")]),
-                                  _vm._v(" Edit")
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-card",
+                                    [
+                                      _c(
+                                        "v-card-title",
+                                        { staticClass: "headline" },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Edit Task Name\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-text",
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Task Name*",
+                                              required: ""
+                                            },
+                                            model: {
+                                              value: _vm.task_name,
+                                              callback: function($$v) {
+                                                _vm.task_name = $$v
+                                              },
+                                              expression: "task_name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-card-actions",
+                                        [
+                                          _c("v-spacer"),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-btn",
+                                            {
+                                              attrs: {
+                                                color: "primary",
+                                                text: ""
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.updateTask(
+                                                    task.id,
+                                                    _vm.task_name
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        UPDATE\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
                               )
