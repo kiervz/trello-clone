@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\CardController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\API\CardController;
+use App\Http\Controllers\API\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*

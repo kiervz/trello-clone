@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-list-item-content>
-            <v-flex md11 sm10 xs10>
+            <v-flex md11 sm10 xs9>
                 <v-text-field
                     label="Add Card*"
                     required
@@ -9,18 +9,28 @@
                     v-model="card_name">
                 </v-text-field>
             </v-flex>
-            <v-flex md1 sm2 xs2>
-                <v-btn
-                    elevation="4"
-                    small
-                    dark
-                    color="primary"
-                    fab
-                    class="ml-5"
-                    @click="!is_edit ? add(card_name) : update(card_name)">
-                    <v-icon v-if="!is_edit">mdi-plus</v-icon>
-                    <v-icon v-else>mdi-content-save</v-icon>
-                </v-btn>
+            <v-flex md1 sm2 xs3>
+                <div class="d-flex">
+                    <v-btn
+                        elevation="4"
+                        small
+                        dark
+                        color="primary"
+                        fab
+                        @click="!is_edit ? add(card_name) : update(card_name)">
+                        <v-icon v-if="!is_edit">mdi-plus</v-icon>
+                        <v-icon v-else>mdi-content-save</v-icon>
+                    </v-btn>
+                    <v-btn
+                        elevation="4"
+                        small
+                        fab
+                        class="ml-2"
+                        v-if="is_edit"
+                        @click="close">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </div>
             </v-flex>
         </v-list-item-content>
     </div>
@@ -55,6 +65,9 @@
                     return
                 }
                 this.$emit('update', this.card_id, name);
+                this.close()
+            },
+            close() {
                 this.card_name = null
                 this.card_id = null
                 this.is_edit = false

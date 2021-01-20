@@ -9,7 +9,7 @@
                     elevation="4"
                     small
                     dark
-                    color="primary"
+                    :color="!is_add ? 'primary' : 'error'"
                     fab
                     @click="is_add = !is_add">
                     <v-icon v-if="!is_add">mdi-plus</v-icon>
@@ -17,14 +17,23 @@
                 </v-btn>
             </v-flex>
         </v-list-item-content>
-        <v-list-item-content>
+        <v-list-item-content v-if="is_add">
+            <v-container>
+                <v-alert
+                    dense
+                    outlined
+                    type="error"
+                    v-if="error"
+                    >
+                    {{ error }}
+                </v-alert>
+            </v-container>
             <v-flex md11 sm10 xs10>
                 <v-text-field
                     label="Add Task*"
                     required
-                    v-if="is_add"
                     v-model="task_name"
-                    class="mr-3 ml-3"
+                    class="mr-3 ml-5"
                     @keydown.enter="add(task_name)">
                 ></v-text-field>
             </v-flex>
@@ -35,8 +44,6 @@
                     dark
                     color="primary"
                     fab
-                    class="ml-5"
-                    v-if="is_add"
                     @click="add(task_name)">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
@@ -49,7 +56,8 @@
         data() {
             return {
                 task_name: null,
-                is_add: false
+                is_add: false,
+                error: null,
             }
         },
         methods: {
@@ -62,7 +70,14 @@
                         this.task_name = null
                         this.is_add = false
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        this.error = error.response.data.errors.task_name[0]
+                    })
+            },
+            color() {
+                let color = !this.is_add ? 'primary' : 'red'
+                alert(color)
+                return color
             }
         }
     }

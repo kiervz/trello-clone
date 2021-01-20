@@ -9,7 +9,11 @@
             {{ error }}
         </v-alert>
         <AddCard @add="addNewCard" @update="updateCard" />
-        <v-card @dblclick="editCard(card.id, card)" v-for="card in cards" :key="card.id" class="mb-4">
+        <v-card
+            v-for="card in cards"
+            :key="card.id"
+            class="mb-4 card-item"
+            >
             <v-list-item-content class="pr-4 pl-4 pa-0">
                 <v-flex md1 sm1 xs1>
                     <v-checkbox
@@ -17,11 +21,14 @@
                         @change="markComplete(card.id, card.is_complete)">
                     </v-checkbox>
                 </v-flex>
-                <v-flex md10 sm10 xs10 class="pl-2" :class="card.is_complete ? 'is-complete' : ''">
+                <v-flex md10 sm9 xs9 :class="card.is_complete ? 'is-complete' : ''">
                     <h4>{{ card.card_name }}</h4>
                 </v-flex>
-                <v-flex md1 sm1 xs1>
+                <v-flex md1 sm2 xs2>
                     <div class="d-flex">
+                        <v-btn icon small @click="editCard(card.id, card)">
+                            <v-icon color="orange">mdi-pencil</v-icon>
+                        </v-btn>
                         <v-btn icon small @click="deleteCard(card.id)">
                             <v-icon color="red">mdi-delete</v-icon>
                         </v-btn>
@@ -105,5 +112,9 @@
     .is-complete {
         text-decoration: line-through;
         color: grey;
+    }
+    .card-item:hover {
+        background-color: #F5F5F5;
+        cursor: pointer;
     }
 </style>

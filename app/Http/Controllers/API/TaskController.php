@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
@@ -34,6 +35,7 @@ class TaskController extends Controller
         Task::create($request->all());
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Task Successfully Added.'
         ]);
     }
@@ -44,6 +46,7 @@ class TaskController extends Controller
         $task->update($request->all());
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Task Successfully Updated.'
         ]);
     }
@@ -54,6 +57,7 @@ class TaskController extends Controller
         $task->delete();
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Task Successfully Deleted.'
         ]);
     }

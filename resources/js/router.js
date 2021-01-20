@@ -5,6 +5,7 @@ import Register from './components/auth/Register.vue'
 import Logout from './components/auth/Logout.vue'
 import Task from './components/pages/Task/Task.vue'
 import NotFound404 from './components/pages/NotFound404.vue'
+import User from './helpers/User'
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,7 @@ const routes = [
     },
     {
         name: 'Task',
-        path: '/task',
+        path: '/',
         component: Task,
         meta: {
             requiresAuth: true
@@ -51,6 +52,11 @@ router.beforeEach((to, from, next) => {
             next()
         } else {
             next({ path: '/login' })
+        }
+    } else if(User.loggedIn()) {
+        let log_reg = ['/login', '/register']
+        if (log_reg.includes(to.path)) {
+            next('/')
         }
     }
     next()

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CardRequest;
 use App\Http\Resources\CardResource;
 use App\Models\Card;
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +58,7 @@ class CardController extends Controller
         $card->update($request->all());
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Card Successfully Updated.'
         ]);
     }
@@ -71,6 +72,7 @@ class CardController extends Controller
         $card->delete();
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Card Successfully Deleted.'
         ]);
     }
@@ -84,6 +86,7 @@ class CardController extends Controller
         $card->update($request->all());
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Card Successfully Updated.'
         ]);
     }

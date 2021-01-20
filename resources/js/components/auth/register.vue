@@ -87,6 +87,10 @@
                 axios.post('/api/auth/register', this.form)
                     .then(res => {
                         this.$router.push('/login');
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Successfully Registered.',
+                        });
                     })
                     .catch(error => {
                         let status = error.response.status

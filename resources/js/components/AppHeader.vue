@@ -1,12 +1,14 @@
 <template>
     <v-container>
-        <v-app-bar app dense dark fixed>
+        <v-app-bar app dense dark fixed color="primary">
             <v-app-bar-nav-icon @click="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <router-link to="/task" class="text-decoration-none white--text">Trello</router-link>
+                <router-link to="/" class="text-decoration-none white--text">Trello</router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down" v-for="item in items" :key="item.title">
+            <v-toolbar-items
+                class="hidden-sm-and-down"
+                v-for="item in items" :key="item.title">
                 <v-btn text
                     :to="item.to"
                     v-if="item.show"
@@ -27,7 +29,7 @@
                         <v-list-item-group>
                             <v-list-item>
                                 <v-list-item-content>
-                                    <router-link to="/task" class="text-decoration-none black--text">
+                                    <router-link to="" class="text-decoration-none black--text">
                                         <v-icon>mdi-account</v-icon> {{ loggedInUser }}
                                     </router-link>
                                 </v-list-item-content>
@@ -60,7 +62,6 @@
         data() {
             return {
                 items: [
-                    { title: 'Task', to: '/task', show: User.loggedIn() },
                     { title: 'Login', to: '/login', show: !User.loggedIn() },
                     { title: 'Register', to: '/register', show: !User.loggedIn() },
                 ],
