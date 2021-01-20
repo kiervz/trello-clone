@@ -7,8 +7,10 @@
             <v-flex md1 sm2 xs2>
                 <v-btn
                     elevation="4"
+                    small
+                    dark
                     color="primary"
-                    icon
+                    fab
                     @click="is_add = !is_add">
                     <v-icon v-if="!is_add">mdi-plus</v-icon>
                     <v-icon v-else>mdi-close</v-icon>

@@ -2494,6 +2494,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2639,6 +2641,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2666,6 +2696,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     clickItem: function clickItem(task_id, name) {
       EventBus.$emit('showCard', task_id, name);
+    },
+    deleteTask: function deleteTask(id) {
+      var _this3 = this;
+
+      axios["delete"]("api/task/".concat(id)).then(function (data) {
+        _this3.fetchTasks();
+      })["catch"](function (error) {
+        return console.log(error);
+      });
     }
   }
 });
@@ -7150,7 +7189,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.badge[data-v-69997efc] {\n    margin-right: 20%;\n}\n.card-item[data-v-69997efc]:hover {\n    background-color: #F5F5F5;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.badge[data-v-69997efc] {\n    margin-right: 20%;\n}\n.card-item[data-v-69997efc]:hover {\n    background-color: #F5F5F5;\n    cursor: pointer;\n}\n.v-speed-dial[data-v-69997efc] {\n    position: absolute;\n}\n", ""]);
 
 // exports
 
@@ -41484,7 +41523,13 @@ var render = function() {
               _c(
                 "v-btn",
                 {
-                  attrs: { elevation: "4", color: "primary", icon: "" },
+                  attrs: {
+                    elevation: "4",
+                    small: "",
+                    dark: "",
+                    color: "primary",
+                    fab: ""
+                  },
                   on: {
                     click: function($event) {
                       _vm.is_add = !_vm.is_add
@@ -41623,76 +41668,187 @@ var render = function() {
         _vm._l(_vm.tasks, function(task) {
           return _c(
             "v-col",
-            { key: task.id, attrs: { cols: "12", md: "4", sm: "6" } },
+            {
+              key: task.id,
+              staticClass: "mt-4",
+              attrs: { cols: "12", md: "4", sm: "6" }
+            },
             [
               _c(
                 "v-card",
-                {
-                  staticClass: "pt-4 pl-4 pr-4 ma-2 card-item",
-                  on: {
-                    click: function($event) {
-                      return _vm.clickItem(task.id, task.task_name)
-                    }
-                  }
-                },
+                { staticClass: "pt-4 pl-4 pr-4 ma-2 card-item" },
                 [
-                  _c("v-card-text", [
-                    _c("h2", { staticClass: "text--secondary" }, [
-                      _vm._v(_vm._s(task.task_name))
-                    ])
-                  ]),
-                  _vm._v(" "),
                   _c(
-                    "v-card-actions",
-                    { staticClass: "d-flex flex-row-reverse" },
+                    "v-menu",
+                    {
+                      attrs: { "offset-y": "" },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "activator",
+                            fn: function(ref) {
+                              var on = ref.on
+                              var attrs = ref.attrs
+                              return [
+                                _c(
+                                  "v-btn",
+                                  _vm._g(
+                                    _vm._b(
+                                      {
+                                        attrs: {
+                                          small: "",
+                                          absolute: "",
+                                          top: "",
+                                          icon: "",
+                                          right: "",
+                                          color: "grey"
+                                        }
+                                      },
+                                      "v-btn",
+                                      attrs,
+                                      false
+                                    ),
+                                    on
+                                  ),
+                                  [
+                                    _c("v-icon", [
+                                      _vm._v(
+                                        "\n                                mdi-cog\n                            "
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    },
                     [
-                      _c("h5", { staticClass: "grey--text" }, [
-                        _vm._v(_vm._s(task.created_at))
-                      ]),
                       _vm._v(" "),
                       _c(
-                        "div",
-                        { staticClass: "badge" },
+                        "v-list",
                         [
                           _c(
-                            "v-badge",
-                            {
-                              staticClass: "mr-5",
-                              attrs: {
-                                content:
-                                  task.count_cards > 0 ? task.count_cards : "0",
-                                color: "grey",
-                                inline: ""
-                              }
-                            },
+                            "v-list-item",
+                            { attrs: { link: "" } },
                             [
-                              _c("v-icon", [
-                                _vm._v("mdi-format-list-bulleted-square")
-                              ])
+                              _c(
+                                "v-list-item-title",
+                                [
+                                  _c("v-icon", [_vm._v("mdi-pencil")]),
+                                  _vm._v(" Edit")
+                                ],
+                                1
+                              )
                             ],
                             1
                           ),
                           _vm._v(" "),
                           _c(
-                            "v-badge",
-                            {
-                              staticClass: "mr-5",
-                              attrs: {
-                                content:
-                                  task.count_complete > 0
-                                    ? task.count_complete
-                                    : "0",
-                                color: "blue",
-                                inline: ""
-                              }
-                            },
-                            [_c("v-icon", [_vm._v("mdi-playlist-check")])],
+                            "v-list-item",
+                            { attrs: { link: "" } },
+                            [
+                              _c(
+                                "v-list-item-title",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteTask(task.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-icon", [_vm._v("mdi-delete")]),
+                                  _vm._v(" Delete")
+                                ],
+                                1
+                              )
+                            ],
                             1
                           )
                         ],
                         1
                       )
-                    ]
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.clickItem(task.id, task.task_name)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-card-text", [
+                        _c("h2", { staticClass: "text--secondary" }, [
+                          _vm._v(_vm._s(task.task_name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        { staticClass: "d-flex flex-row-reverse" },
+                        [
+                          _c("h5", { staticClass: "grey--text" }, [
+                            _vm._v(_vm._s(task.created_at))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "badge" },
+                            [
+                              _c(
+                                "v-badge",
+                                {
+                                  staticClass: "mr-5",
+                                  attrs: {
+                                    content:
+                                      task.count_cards > 0
+                                        ? task.count_cards
+                                        : "0",
+                                    color: "grey",
+                                    inline: ""
+                                  }
+                                },
+                                [
+                                  _c("v-icon", [
+                                    _vm._v("mdi-format-list-bulleted-square")
+                                  ])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-badge",
+                                {
+                                  staticClass: "mr-5",
+                                  attrs: {
+                                    content:
+                                      task.count_complete > 0
+                                        ? task.count_complete
+                                        : "0",
+                                    color: "blue",
+                                    inline: ""
+                                  }
+                                },
+                                [_c("v-icon", [_vm._v("mdi-playlist-check")])],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
