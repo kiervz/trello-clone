@@ -22,7 +22,7 @@
                 </v-flex>
                 <v-flex md1 sm1 xs1>
                     <div class="d-flex">
-                        <v-btn icon small>
+                        <v-btn icon small @click="deleteCard(card.id)">
                             <v-icon color="red">mdi-delete</v-icon>
                         </v-btn>
                     </div>
@@ -77,11 +77,21 @@
                         task_id: this.task_id
                     })
                     .then(data => {
-                        console.log(data);
+                        this.error = null
                         this.fetchCards()
                     })
                     .catch(error => {
                         this.error = error.response.data.errors.name[0]
+                    })
+            },
+            deleteCard(id) {
+                axios.delete(`api/card/${id}/${this.task_id}`)
+                    .then(data => {
+                        console.log("deleted");
+                        this.fetchCards()
+                    })
+                    .catch(error => {
+                        console.log(error);
                     })
             }
         }

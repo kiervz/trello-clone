@@ -2387,11 +2387,22 @@ __webpack_require__.r(__webpack_exports__);
         name: name,
         task_id: this.task_id
       }).then(function (data) {
-        console.log(data);
+        _this3.error = null;
 
         _this3.fetchCards();
       })["catch"](function (error) {
         _this3.error = error.response.data.errors.name[0];
+      });
+    },
+    deleteCard: function deleteCard(id) {
+      var _this4 = this;
+
+      axios["delete"]("api/card/".concat(id, "/").concat(this.task_id)).then(function (data) {
+        console.log("deleted");
+
+        _this4.fetchCards();
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -39535,7 +39546,14 @@ var render = function() {
                     [
                       _c(
                         "v-btn",
-                        { attrs: { icon: "", small: "" } },
+                        {
+                          attrs: { icon: "", small: "" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteCard(card.id)
+                            }
+                          }
+                        },
                         [
                           _c("v-icon", { attrs: { color: "red" } }, [
                             _vm._v("mdi-delete")
