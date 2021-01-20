@@ -2275,11 +2275,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      card_name: null
+      card_name: null,
+      card_id: null,
+      is_edit: false
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    EventBus.$on('editCard', function (id, name) {
+      _this.is_edit = true;
+      _this.card_id = id;
+      _this.card_name = name;
+    });
   },
   methods: {
     add: function add(name) {
@@ -2289,6 +2316,17 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit('add', name);
       this.card_name = null;
+    },
+    update: function update(name) {
+      if (!name) {
+        this.is_edit = false;
+        return;
+      }
+
+      this.$emit('update', this.card_id, name);
+      this.card_name = null;
+      this.card_id = null;
+      this.is_edit = false;
     }
   }
 });
@@ -2394,13 +2432,25 @@ __webpack_require__.r(__webpack_exports__);
         _this3.error = error.response.data.errors.card_name[0];
       });
     },
-    deleteCard: function deleteCard(id) {
+    updateCard: function updateCard(id, name) {
       var _this4 = this;
 
-      axios["delete"]("api/card/".concat(id, "/").concat(this.task_id)).then(function (data) {
-        console.log("deleted");
+      axios.put("api/card/".concat(id, "/").concat(this.task_id), {
+        card_name: name
+      }).then(function (data) {
+        return _this4.fetchCards();
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    editCard: function editCard(id, name) {
+      EventBus.$emit('editCard', id, name.card_name);
+    },
+    deleteCard: function deleteCard(id) {
+      var _this5 = this;
 
-        _this4.fetchCards();
+      axios["delete"]("api/card/".concat(id, "/").concat(this.task_id)).then(function (data) {
+        _this5.fetchCards();
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -39615,28 +39665,64 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("v-text-field", {
-        staticClass: "mr-3",
-        attrs: { label: "Add Card*", required: "" },
-        on: {
-          keydown: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.add(_vm.card_name)
-          }
-        },
-        model: {
-          value: _vm.card_name,
-          callback: function($$v) {
-            _vm.card_name = $$v
-          },
-          expression: "card_name"
-        }
-      })
+      _c(
+        "v-list-item-content",
+        [
+          _c(
+            "v-flex",
+            { attrs: { md11: "", sm10: "", xs10: "" } },
+            [
+              _c("v-text-field", {
+                staticClass: "mr-3",
+                attrs: { label: "Add Card*", required: "" },
+                model: {
+                  value: _vm.card_name,
+                  callback: function($$v) {
+                    _vm.card_name = $$v
+                  },
+                  expression: "card_name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { md1: "", sm2: "", xs2: "" } },
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "ml-5",
+                  attrs: {
+                    elevation: "4",
+                    small: "",
+                    dark: "",
+                    color: "primary",
+                    fab: ""
+                  },
+                  on: {
+                    click: function($event) {
+                      !_vm.is_edit
+                        ? _vm.add(_vm.card_name)
+                        : _vm.update(_vm.card_name)
+                    }
+                  }
+                },
+                [
+                  !_vm.is_edit
+                    ? _c("v-icon", [_vm._v("mdi-plus")])
+                    : _c("v-icon", [_vm._v("mdi-content-save")])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -39672,12 +39758,20 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("AddCard", { on: { add: _vm.addNewCard } }),
+      _c("AddCard", { on: { add: _vm.addNewCard, update: _vm.updateCard } }),
       _vm._v(" "),
       _vm._l(_vm.cards, function(card) {
         return _c(
           "v-card",
-          { key: card.id, staticClass: "mb-4" },
+          {
+            key: card.id,
+            staticClass: "mb-4",
+            on: {
+              dblclick: function($event) {
+                return _vm.editCard(card.id, card)
+              }
+            }
+          },
           [
             _c(
               "v-list-item-content",

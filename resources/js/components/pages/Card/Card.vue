@@ -8,8 +8,8 @@
             >
             {{ error }}
         </v-alert>
-        <AddCard @add="addNewCard" />
-        <v-card v-for="card in cards" :key="card.id" class="mb-4">
+        <AddCard @add="addNewCard" @update="updateCard" />
+        <v-card @dblclick="editCard(card.id, card)" v-for="card in cards" :key="card.id" class="mb-4">
             <v-list-item-content class="pr-4 pl-4 pa-0">
                 <v-flex md1 sm1 xs1>
                     <v-checkbox
@@ -80,10 +80,19 @@
                         this.error = error.response.data.errors.card_name[0]
                     })
             },
+            updateCard(id, name) {
+                axios.put(`api/card/${id}/${this.task_id}`, {
+                        card_name: name
+                    })
+                    .then(data => this.fetchCards())
+                    .catch(error => console.log(error))
+            },
+            editCard(id, name) {
+                EventBus.$emit('editCard', id, name.card_name);
+            },
             deleteCard(id) {
                 axios.delete(`api/card/${id}/${this.task_id}`)
                     .then(data => {
-                        console.log("deleted");
                         this.fetchCards()
                     })
                     .catch(error => console.log(error))
