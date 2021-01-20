@@ -48,6 +48,10 @@
         },
         created() {
             this.fetchTasks()
+
+            EventBus.$on('newTask', () => {
+                this.fetchTasks()
+            })
         },
         methods: {
             fetchTasks() {

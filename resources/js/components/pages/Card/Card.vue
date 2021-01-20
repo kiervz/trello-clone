@@ -9,8 +9,8 @@
             {{ error }}
         </v-alert>
         <AddCard @add="addNewCard" />
-        <v-card v-for="card in cards" :key="card.id" class="mb-4 pa-1">
-            <v-list-item-content class="pr-4 pl-4">
+        <v-card v-for="card in cards" :key="card.id" class="mb-4">
+            <v-list-item-content class="pr-4 pl-4 pa-0">
                 <v-flex md1 sm1 xs1>
                     <v-checkbox
                         v-model="card.is_complete"
