@@ -147,6 +147,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'card_name' => 'card name',
+        'task_name' => 'task name'
+    ],
 
 ];

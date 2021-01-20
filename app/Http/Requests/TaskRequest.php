@@ -25,7 +25,7 @@ class TaskRequest extends FormRequest
     {
         $isMethodPut = $this->method() == 'PUT';
         return [
-            'name' => $isMethodPut ? 'required|string|unique:tasks,name,' .$this->id : 'required|string|unique:tasks'
+            'task_name' => $isMethodPut ? 'required|string|unique:tasks,task_name,' .$this->id : 'required|string|unique:tasks'
         ];
     }
 }

@@ -15,7 +15,7 @@ class CreateCardsTable extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('card_name');
             $table->integer('task_id');
             $table->boolean('is_complete')->default(false);
             $table->timestamps();

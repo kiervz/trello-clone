@@ -18,7 +18,7 @@
                     </v-checkbox>
                 </v-flex>
                 <v-flex md10 sm10 xs10 class="pl-2" :class="card.is_complete ? 'is-complete' : ''">
-                    <h4>{{ card.name }}</h4>
+                    <h4>{{ card.card_name }}</h4>
                 </v-flex>
                 <v-flex md1 sm1 xs1>
                     <div class="d-flex">
@@ -56,9 +56,7 @@
                     .then(({data}) => {
                         this.cards = data.cards
                     })
-                    .catch(error => {
-                        console.log(error);
-                    })
+                    .catch(error => console.log(error))
             },
             markComplete(id, is_complete) {
                 axios.put(`api/card/${id}/${this.task_id}/update`, {
@@ -67,13 +65,11 @@
                     .then(data => {
                         this.cards.is_complete = is_complete
                     })
-                    .catch(error => {
-                        console.log(error);
-                    })
+                    .catch(error => console.log(error))
             },
             addNewCard(name) {
                 axios.post(`api/card/${this.task_id}`, {
-                        name: name,
+                        card_name: name,
                         task_id: this.task_id
                     })
                     .then(data => {
@@ -81,7 +77,7 @@
                         this.fetchCards()
                     })
                     .catch(error => {
-                        this.error = error.response.data.errors.name[0]
+                        this.error = error.response.data.errors.card_name[0]
                     })
             },
             deleteCard(id) {
@@ -90,9 +86,7 @@
                         console.log("deleted");
                         this.fetchCards()
                     })
-                    .catch(error => {
-                        console.log(error);
-                    })
+                    .catch(error => console.log(error))
             }
         }
     }

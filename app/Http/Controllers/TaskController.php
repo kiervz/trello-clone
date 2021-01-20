@@ -31,7 +31,7 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $request->user_id = Auth::user()->id;
-        $task = Task::create($request->all());
+        Task::create($request->all());
 
         return response()->json([
             'message' => 'Task Successfully Added.'

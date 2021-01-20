@@ -2278,7 +2278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      name: null
+      card_name: null
     };
   },
   methods: {
@@ -2288,7 +2288,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.$emit('add', name);
-      this.name = null;
+      this.card_name = null;
     }
   }
 });
@@ -2366,7 +2366,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = _ref.data;
         _this.cards = data.cards;
       })["catch"](function (error) {
-        console.log(error);
+        return console.log(error);
       });
     },
     markComplete: function markComplete(id, is_complete) {
@@ -2377,21 +2377,21 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (data) {
         _this2.cards.is_complete = is_complete;
       })["catch"](function (error) {
-        console.log(error);
+        return console.log(error);
       });
     },
     addNewCard: function addNewCard(name) {
       var _this3 = this;
 
       axios.post("api/card/".concat(this.task_id), {
-        name: name,
+        card_name: name,
         task_id: this.task_id
       }).then(function (data) {
         _this3.error = null;
 
         _this3.fetchCards();
       })["catch"](function (error) {
-        _this3.error = error.response.data.errors.name[0];
+        _this3.error = error.response.data.errors.card_name[0];
       });
     },
     deleteCard: function deleteCard(id) {
@@ -2402,7 +2402,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.fetchCards();
       })["catch"](function (error) {
-        console.log(error);
+        return console.log(error);
       });
     }
   }
@@ -2566,21 +2566,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      todos: []
+      tasks: []
     };
   },
   created: function created() {
-    this.fetchTodos();
+    this.fetchTasks();
   },
   methods: {
-    fetchTodos: function fetchTodos() {
+    fetchTasks: function fetchTasks() {
       var _this = this;
 
       axios.get('/api/task').then(function (_ref) {
         var data = _ref.data;
-        _this.todos = data.data;
+        _this.tasks = data.data;
       })["catch"](function (error) {
-        console.log(error);
+        return console.log(error);
       });
     },
     clickItem: function clickItem(task_id, name) {
@@ -39450,15 +39450,15 @@ var render = function() {
             ) {
               return null
             }
-            return _vm.add(_vm.name)
+            return _vm.add(_vm.card_name)
           }
         },
         model: {
-          value: _vm.name,
+          value: _vm.card_name,
           callback: function($$v) {
-            _vm.name = $$v
+            _vm.card_name = $$v
           },
-          expression: "name"
+          expression: "card_name"
         }
       })
     ],
@@ -39536,7 +39536,7 @@ var render = function() {
                     class: card.is_complete ? "is-complete" : "",
                     attrs: { md10: "", sm10: "", xs10: "" }
                   },
-                  [_c("h4", [_vm._v(_vm._s(card.name))])]
+                  [_c("h4", [_vm._v(_vm._s(card.card_name))])]
                 ),
                 _vm._v(" "),
                 _c("v-flex", { attrs: { md1: "", sm1: "", xs1: "" } }, [
@@ -41428,10 +41428,10 @@ var render = function() {
       _c(
         "v-row",
         { attrs: { "no-gutters": "" } },
-        _vm._l(_vm.todos, function(todo) {
+        _vm._l(_vm.tasks, function(task) {
           return _c(
             "v-col",
-            { key: todo.id, attrs: { cols: "12", md: "4", sm: "6" } },
+            { key: task.id, attrs: { cols: "12", md: "4", sm: "6" } },
             [
               _c(
                 "v-card",
@@ -41439,14 +41439,14 @@ var render = function() {
                   staticClass: "pt-4 pl-4 pr-4 ma-2 card-item",
                   on: {
                     click: function($event) {
-                      return _vm.clickItem(todo.id, todo.name)
+                      return _vm.clickItem(task.id, task.task_name)
                     }
                   }
                 },
                 [
                   _c("v-card-text", [
                     _c("h2", { staticClass: "text--secondary" }, [
-                      _vm._v(_vm._s(todo.name))
+                      _vm._v(_vm._s(task.task_name))
                     ])
                   ]),
                   _vm._v(" "),
@@ -41455,7 +41455,7 @@ var render = function() {
                     { staticClass: "d-flex flex-row-reverse" },
                     [
                       _c("h5", { staticClass: "grey--text" }, [
-                        _vm._v(_vm._s(todo.created_at))
+                        _vm._v(_vm._s(task.created_at))
                       ]),
                       _vm._v(" "),
                       _c(
@@ -41468,7 +41468,7 @@ var render = function() {
                               staticClass: "mr-5",
                               attrs: {
                                 content:
-                                  todo.count_cards > 0 ? todo.count_cards : "0",
+                                  task.count_cards > 0 ? task.count_cards : "0",
                                 color: "grey",
                                 inline: ""
                               }
@@ -41487,8 +41487,8 @@ var render = function() {
                               staticClass: "mr-5",
                               attrs: {
                                 content:
-                                  todo.count_complete > 0
-                                    ? todo.count_complete
+                                  task.count_complete > 0
+                                    ? task.count_complete
                                     : "0",
                                 color: "blue",
                                 inline: ""

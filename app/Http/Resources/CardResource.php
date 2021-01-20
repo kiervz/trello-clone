@@ -16,7 +16,7 @@ class CardResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'card_name' => $this->card_name,
             'task_id' => $this->task_id,
             'is_complete' => $this->is_complete,
             'created_at' => $this->created_at->format('M j, Y - G:i')

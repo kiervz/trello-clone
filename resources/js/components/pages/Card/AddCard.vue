@@ -4,8 +4,8 @@
             label="Add Card*"
             required
             class="mr-3"
-            v-model="name"
-            @keydown.enter="add(name)">
+            v-model="card_name"
+            @keydown.enter="add(card_name)">
         </v-text-field>
     </div>
 </template>
@@ -13,7 +13,7 @@
     export default {
         data() {
             return {
-                name: null,
+                card_name: null,
             }
         },
         methods: {
@@ -22,7 +22,7 @@
                     return;
                 }
                 this.$emit('add', name);
-                this.name = null
+                this.card_name = null
             }
         }
     }
