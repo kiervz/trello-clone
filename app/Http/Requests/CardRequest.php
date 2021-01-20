@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CardRequest extends FormRequest
 {
@@ -25,7 +26,9 @@ class CardRequest extends FormRequest
     {
         $isMethodPut = $this->method() == 'PUT';
         return [
-            'name' => $isMethodPut ? 'required|string|unique:cards,name,' .$this->id : 'required|string|unique:cards',
+            'name' => $isMethodPut ? 'required|string|unique:cards,name,' .$this->id : ['required','string', Rule::unique('cards')->where(function($query) {
+                $query->where('task_id', '=', $this->task_id);
+            })]
         ];
     }
 }

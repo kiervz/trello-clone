@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="is_card">
-            <h2>Cards</h2>
+            <h2>{{ task_name }} List</h2>
             <Card :task_id="task_id" />
         </div>
         <div v-else>
@@ -19,13 +19,15 @@
             return {
                 is_card: false,
                 task_id: null,
+                task_name: null,
             }
         },
         methods: {
             listen() {
-                EventBus.$on('showCard', (task_id) => {
+                EventBus.$on('showCard', (task_id, name) => {
                     this.is_card = true
                     this.task_id = task_id
+                    this.task_name = name
                 });
             }
         },

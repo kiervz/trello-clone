@@ -8,7 +8,7 @@
                 md="4"
                 sm="6">
                 <v-card
-                    @click="clickItem(todo.id)"
+                    @click="clickItem(todo.id, todo.name)"
                     class="pt-4 pl-4 pr-4 ma-2 card-item"
                     >
                     <v-card-text>
@@ -59,8 +59,8 @@
                         console.log(error);
                     })
             },
-            clickItem(task_id) {
-                EventBus.$emit('showCard', task_id);
+            clickItem(task_id, name) {
+                EventBus.$emit('showCard', task_id, name);
             }
         }
     }

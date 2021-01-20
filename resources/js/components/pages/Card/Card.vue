@@ -1,5 +1,14 @@
 <template>
     <v-container>
+        <v-alert
+            dense
+            outlined
+            type="error"
+            v-if="error"
+            >
+            {{ error }}
+        </v-alert>
+        <AddCard @add="addNewCard" />
         <v-card v-for="card in cards" :key="card.id" class="mb-4 pa-1">
             <v-list-item-content class="pr-4 pl-4">
                 <v-flex md1 sm1 xs1>
@@ -24,8 +33,10 @@
 </template>
 
 <script>
+    import AddCard from './AddCard'
     export default {
         props: ['task_id'],
+        components: { AddCard },
         data() {
             return {
                 cards: {},
@@ -33,6 +44,7 @@
                     name: null,
                 },
                 is_complete_temp: null,
+                error: null,
             }
         },
         created() {
@@ -57,6 +69,19 @@
                     })
                     .catch(error => {
                         console.log(error);
+                    })
+            },
+            addNewCard(name) {
+                axios.post(`api/card/${this.task_id}`, {
+                        name: name,
+                        task_id: this.task_id
+                    })
+                    .then(data => {
+                        console.log(data);
+                        this.fetchCards()
+                    })
+                    .catch(error => {
+                        this.error = error.response.data.errors.name[0]
                     })
             }
         }
