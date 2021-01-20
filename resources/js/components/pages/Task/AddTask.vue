@@ -17,14 +17,31 @@
                 </v-btn>
             </v-flex>
         </v-list-item-content>
-        <v-text-field
-            label="Add Task*"
-            required
-            v-if="is_add"
-            v-model="task_name"
-            class="mr-3 ml-3"
-            @keydown.enter="add(task_name)">
-        ></v-text-field>
+        <v-list-item-content>
+            <v-flex md11 sm10 xs10>
+                <v-text-field
+                    label="Add Task*"
+                    required
+                    v-if="is_add"
+                    v-model="task_name"
+                    class="mr-3 ml-3"
+                    @keydown.enter="add(task_name)">
+                ></v-text-field>
+            </v-flex>
+            <v-flex md1 sm2 xs2>
+                <v-btn
+                    elevation="4"
+                    small
+                    dark
+                    color="primary"
+                    fab
+                    class="ml-5"
+                    v-if="is_add"
+                    @click="add(task_name)">
+                    <v-icon>mdi-plus</v-icon>
+                </v-btn>
+            </v-flex>
+        </v-list-item-content>
     </div>
 </template>
 <script>
